@@ -12,9 +12,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-.navbar a{
-  padding-left: 30 px;
-}
 
 .App-header {
   background-color: #282c34;

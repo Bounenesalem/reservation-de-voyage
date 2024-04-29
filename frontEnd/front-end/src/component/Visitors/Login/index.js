@@ -30,7 +30,7 @@ function Login()
         // console.warn("result",result)
         localStorage.setItem("user-info",JSON.stringify(result))
         // history.push("login")
-        navigate("/Home")
+        navigate("/")
 
     }
 
