@@ -6,7 +6,6 @@ import Contact from "../Contact/index.js"
 import Login from "../Login/index.js"
 import Register from "../Register/index.js"
 import Users from "../../Users/index.js"
-import Protected from "../../Users/protected.js"
 
 
 function Layout(){
