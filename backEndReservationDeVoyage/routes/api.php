@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\registerController;
-use App\Http\Controllers\TrapController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('register',[registerController::class,'register'] );
 Route::post('login',[registerController::class,'login'] );
-Route::post('trap',[TrapController::class,'index'] );
+route::post('/home',[HomeController::class,'index']);
+route::get('/search',[SearchController::class,'search']);
+route::get('/destination/{id}',[DestinationController::class,'show']);

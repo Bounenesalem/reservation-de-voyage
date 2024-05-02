@@ -12,18 +12,15 @@ function Header()
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto " >
-            {
-              localStorage.getItem('user-info') ?
-              <>
+          
+            
               <Link to="/" className="mx-3">Home</Link>            
              <Link to="/about" className="mx-3">About</Link>            
              <Link to="/contact" className="mx-3">Contact</Link>
-              </>
-              :
-              <>
+              
               <Link to="/users" className="mx-3">Users</Link> 
-              </>
-            }
+              
+            
           
                
                        
