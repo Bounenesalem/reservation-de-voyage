@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 function Login()
@@ -8,11 +8,11 @@ function Login()
     const [password,setPassword]=useState("");
 
     const navigate=useNavigate();
-    useEffect(()=>{
-        if(localStorage.getItem('user-info')){
-        navigate("/Home")
-        }
-    })
+    // useEffect(()=>{
+    //     if(localStorage.getItem('user-info')){
+    //     navigate("/Home")
+    //     }
+    // })
 
    async function Login(){
         let item={email,password}
@@ -35,7 +35,7 @@ function Login()
     }
 
     return(
-        <div>  
+        <div>   
             <h1> login page</h1>
             <div className="col-sm-6 offset-sm-3">
                 
@@ -51,4 +51,5 @@ function Login()
         </div>
     ) 
 }
+
 export default Login

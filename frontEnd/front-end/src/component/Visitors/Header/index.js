@@ -17,12 +17,16 @@ function Header()
               <Link to="/" className="mx-3">Home</Link>            
              <Link to="/about" className="mx-3">About</Link>            
              <Link to="/contact" className="mx-3">Contact</Link>
+             
               
               <Link to="/users" className="mx-3">Users</Link> 
               
             
           
-               
+              <Link to="/agency" className="mx-3">Agency</Link>
+             <Link to="/destination" className="mx-3">Destination</Link>
+             <Link to="/trip" className="mx-3">Trip</Link>
+             <Link to="/booking" className="mx-3">Booking</Link>
                        
                    
           </Nav>

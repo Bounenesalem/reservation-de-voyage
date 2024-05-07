@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AgencyController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TripController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +24,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::post('register',[registerController::class,'register'] );
-Route::post('login',[registerController::class,'login'] );
-route::post('/home',[HomeController::class,'index']);
-route::get('/search',[SearchController::class,'search']);
-route::get('/destination/{id}',[DestinationController::class,'show']);
+route::apiResource('destination',DestinationController::class);
+route::apiResource('agency',AgencyController::class);
+route::apiResource('trip',TripController::class);
+route::apiResource('booking',BookingController::class);
+// Route::post('register',[registerController::class,'register'] );
+// Route::post('login',[registerController::class,'login'] );
+// route::post('/home',[HomeController::class,'index']);
+// route::get('/search',[SearchController::class,'search']);
+// route::get('/destination/{id}',[DestinationController::class,'show']);

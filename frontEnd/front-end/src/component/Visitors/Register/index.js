@@ -1,16 +1,16 @@
-import React,{useEffect, useState} from "react"
+import React,{ useState} from "react"
 import { useNavigate } from "react-router-dom"
 // import {useHistory} from 'react-router-dom'
 
 function Register()
 {
-    useEffect(()=>{
-        if(localStorage.getItem('user-info')){
-            navigate('/')
+//     useEffect(()=>{
+//         if(localStorage.getItem('user-info')){
+//             navigate('/')
 
-        }
+//         }
 
-})
+// })
 
 
     const [name,setName]=useState("")   
