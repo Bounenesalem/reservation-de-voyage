@@ -31,6 +31,7 @@ route::apiResource('trip',TripController::class)->shallow();
 route::apiResource('booking',BookingController::class);
 // route::apiResource('users',UserController::class);
 Route::get('agency/{id}/trip', [AgencyController::class, 'getTrips']);
+Route::post('trip/{id}/reserve', [BookingController::class, 'reserve']);
 
 
 Route::post('register',[registerController::class,'register'] );

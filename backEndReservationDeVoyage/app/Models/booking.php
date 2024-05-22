@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class booking extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'trip_id', 'booking_date', 'status'];
+    protected $fillable = [ 'trip_id', 'booking_date', 'status','name','num_people'];
 
     // public function user(): BelongsTo
     // {

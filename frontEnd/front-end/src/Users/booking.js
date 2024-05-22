@@ -264,6 +264,10 @@ const Bookings = () => {
               <label htmlFor="numPeople" className="form-label">Number of People:</label>
               <input type="number" id="numPeople" name="numPeople" className="form-control" value={reservation.numPeople} onChange={handleReservationChange} required />
             </div>
+            <div className="mb-3">
+              <label htmlFor="booking_date" className="form-label">Booking Date:</label>
+              <input type="date" id="booking_date" name="booking_date" className="form-control" value={reservation.booking_date} onChange={handleReservationChange} required />
+            </div>
             <button type="submit" className="btn btn-success">Reserve</button>
           </form>
 
