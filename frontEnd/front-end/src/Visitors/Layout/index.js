@@ -26,6 +26,10 @@ import UpdateTrip from "../../Admins/pages/tripUpdate.js"
 import TripDetailsPage from "../../Admins/pages/tripDetails.js"
 import AgenciesPage from "../../Users/selectAgency.js"
 import Bookings from "../../Users/booking.js"
+import UserList from "../../Admins/pages/userList.js"
+import UserDetails from "../../Admins/pages/userDetails.js"
+import UpdateUser from "../../Admins/pages/userUpdate.js"
+import CreateUser from "../../Admins/pages/UserCreate.js"
 // import User from "../../Admins/pages/user.js"
 
 
@@ -44,11 +48,16 @@ function Layout(){
           <Route path='/contact' element={<Contact/>} /> 
 
           <Route path='/dashboard' element={<Dashboard/>}>    
-          <Route path="agencyAndTrip" element={<PageAgencies/>}/> 
-          <Route path='listAgency/create' element={<CreateAgency/>} />
+            <Route path="agencyAndTrip" element={<PageAgencies/>}/> 
+            <Route path='listAgency/create' element={<CreateAgency/>} />
             <Route  path='listAgency' element={<Agencies/>}/>           
             <Route path="listAgency/:id" element={<UpdateAgency/>}/>
-           <Route path="listAgency/agency-details/:agencyId" element={<AgencyDetailsPage/>}/>
+            <Route path="listAgency/agency-details/:agencyId" element={<AgencyDetailsPage/>}/>
+
+            <Route path="/dashboard/users" element={<UserList />} />
+            <Route path="users/:id" element={<UserDetails />} />
+            <Route path="users/create-user" element={<CreateUser/>} />
+            <Route path="users/update-user/:id" element={<UpdateUser />} />
 
 
             <Route path="booking" element={<Booking/>}/>

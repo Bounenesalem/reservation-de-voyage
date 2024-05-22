@@ -10,6 +10,7 @@ export default function Sidbar() {
         <Link to={"/dashboard/destinations"} className="mx-3">List Destination</Link>        
         <Link to={"/dashboard/tripsTable"} className="mx-3">TripsTable</Link>
         <Link to={"/dashboard/agencyAndTrip"} className="mx-3">Agencies & Trips</Link>
+        <Link to={"/dashboard/users"} className="mx-3">List Users </Link>
         <Link to={"/dashboard/booking"} className="mx-3">Booking</Link>
 
         

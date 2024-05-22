@@ -68,7 +68,7 @@ const TripsTable = () => {
     return (
         <div>
             <div > 
-            <Link to={"trip"} className="btn btn-success"  >create trip</Link>
+            <Link to={"trip"} className="btn btn-success mt-3"  >create trip</Link>
           </div>
             <h1>Trips</h1>
             <table className="table">

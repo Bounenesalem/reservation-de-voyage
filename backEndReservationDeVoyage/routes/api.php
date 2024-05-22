@@ -22,17 +22,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 route::apiResource('destination',DestinationController::class);
 route::apiResource('agency',AgencyController::class);
 route::apiResource('trip',TripController::class)->shallow();
 route::apiResource('booking',BookingController::class);
-route::resource('users',UserController::class);
+// route::apiResource('users',UserController::class);
 Route::get('agency/{id}/trip', [AgencyController::class, 'getTrips']);
-// Route::post('agency/{agencyId}/trip', [TripController::class, 'addTripToAgency']);
-// Route::post('/agency/{agencyId}/trip', [AgencyController::class, 'addTripToAgency']);
+
 
 Route::post('register',[registerController::class,'register'] );
 Route::post('login',[registerController::class,'login'] );
@@ -42,8 +41,10 @@ route::get('/search',[SearchController::class,'search']);
 
 
 
-// // // إضافة رحلة جديدة لوكالة معينة
-// Route::post('/agency/{agencyId}/trip', [TripController::class, 'store']);
-
-// // جلب جميع الرحلات الخاصة بوكالة معينة
-// Route::get('/agency/{agencyId}/trip', [TripController::class, 'index']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
+});
