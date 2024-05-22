@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class booking extends Model
 {
     use HasFactory;
-    protected $fillable = ['person_id', 'destination_id', 'booking_date', 'status'];
+    protected $fillable = [ 'trip_id', 'booking_date', 'status'];
 
     // public function user(): BelongsTo
     // {
@@ -20,4 +20,11 @@ class booking extends Model
     {
         return $this->belongsTo(Destination::class);
     }
+
+    public function trip(): BelongsTo
+    {
+        return $this->belongsTo(trip::class);
+    }
+
+
 }

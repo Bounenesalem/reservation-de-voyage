@@ -9,7 +9,12 @@ class agency extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'name', 'address','phone','email'
+        'name', 'description','location','email','phone'
     ];
-    
+
+    public function trips()
+    {
+        return $this->hasMany(trip::class);
+    }
+
 }
