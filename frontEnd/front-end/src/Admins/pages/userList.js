@@ -55,6 +55,8 @@ import axios from 'axios';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [runUsers,setRunUsers]=useState(0);
+
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/users')
@@ -64,7 +66,19 @@ const UserList = () => {
       .catch(error => {
         console.error('There was an error fetching the users!', error);
       });
-  }, []);
+  }, [runUsers]);
+
+  async function deleteUser(id){
+    try{ 
+   const res=await  axios.delete( `http://127.0.0.1:8000/api/users/${id}`);
+     if(res.status===200){
+      setRunUsers((prev)=> prev+1)
+     }
+ 
+     }catch{
+         console.log("none");
+     }
+ }
 
   return (
     <div className="container">
@@ -85,6 +99,8 @@ const UserList = () => {
               <td>
                 <Link to={`${user.id}`} className="btn btn-info btn-sm">View</Link>
                 <Link to={`update-user/${user.id}`} className="btn btn-warning btn-sm mx-2">Edit</Link>
+                <button onClick={()=>deleteUser(user.id)} className="btn btn-danger btn-sm mx-2">delete</button> 
+
               </td>
             </tr>
           ))}

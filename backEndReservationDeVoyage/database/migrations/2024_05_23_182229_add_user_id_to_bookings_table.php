@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToBookingssTable extends Migration
+class AddUserIdToBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddColumnToBookingssTable extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->string('name');
-            $table->integer('num_people');
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
         });
     }
@@ -28,11 +27,8 @@ class AddColumnToBookingssTable extends Migration
     public function down()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            Schema::table('reservations', function (Blueprint $table) {
-                $table->dropColumn('name');
-                $table->dropColumn('num_people');
-               
-            });
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 }

@@ -30,6 +30,7 @@ import UserList from "../../Admins/pages/userList.js"
 import UserDetails from "../../Admins/pages/userDetails.js"
 import UpdateUser from "../../Admins/pages/userUpdate.js"
 import CreateUser from "../../Admins/pages/UserCreate.js"
+import BookingList from "../../Admins/pages/bookingList.js"
 // import User from "../../Admins/pages/user.js"
 
 
@@ -61,6 +62,7 @@ function Layout(){
 
 
             <Route path="booking" element={<Booking/>}/>
+            <Route path="bookings" element={<BookingList/>}/>
            
             <Route path="destinations" element={<DestinationList/>}/>
             <Route path="destinations/Create" element={<Destination/>}/>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' ,address:''});
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -60,6 +60,18 @@ const Register = () => {
             id="password"
             name="password"
             value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="address" className="form-label">Address</label>
+          <input
+            type="text"
+            className="form-control"
+            id="address"
+            name="address"
+            value={formData.address}
             onChange={handleInputChange}
             required
           />

@@ -33,6 +33,55 @@ class BookingController extends Controller
         return response()->json(['message' => 'Reservation successful']);
     }
 
+    public function index()
+    {
+        return booking::with(['user', 'trip'])->get();
+    }
+
+    public function show($id)
+    {
+        return booking::with(['user', 'trip'])->findOrFail($id);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'trip_id' => 'required|exists:trips,id',
+            'name' => 'required|string',
+            'booking_date' => 'required|date',
+            'num_people' => 'required|number',
+            'status' => 'required|string',
+        ]);
+
+        return booking::create($request->all());
+    }
+
+    public function update(Request $request, $id)
+    {
+        $reservation = booking::findOrFail($id);
+
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'trip_id' => 'required|exists:trips,id',
+            'name' => 'required|string',
+            'booking_date' => 'required|date',
+            'num_people' => 'required|number',
+            'status' => 'required|string',
+        ]);
+
+        $reservation->update($request->all());
+
+        return $reservation;
+    }
+
+    public function destroy($id)
+    {
+        $reservation = booking::findOrFail($id);
+        $reservation->delete();
+
+        return response(null, 204);
+    }
 
 
     // public function index()
