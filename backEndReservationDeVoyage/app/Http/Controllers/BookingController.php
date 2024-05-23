@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\booking;
 use App\Models\trip;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
     public function reserve(Request $request, $id)
     {
-        $trip = trip::find($id);
+        $trip = Trip::find($id);
 
         if (!$trip) {
             return response()->json(['message' => 'Trip not found'], 404);
@@ -19,7 +20,7 @@ class BookingController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'numPeople' => 'required|integer|min=1',
-            'booking_date'=>'required|date'
+            'booking_date' => 'required|date',
         ]);
 
         $reservation = new booking();
@@ -28,11 +29,11 @@ class BookingController extends Controller
         $reservation->num_people = $validatedData['numPeople'];
         $reservation->booking_date = $validatedData['booking_date'];
         $reservation->status = 'pending'; // Default status
+        $reservation->user_id = Auth::id(); // Add user ID
         $reservation->save();
 
         return response()->json(['message' => 'Reservation successful']);
     }
-
     public function index()
     {
         return booking::with(['user', 'trip'])->get();
