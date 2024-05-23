@@ -51,7 +51,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -83,8 +83,8 @@ const UserList = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <Link to={`/users/${user.id}`} className="btn btn-info btn-sm">View</Link>
-                <Link to={`/update-user/${user.id}`} className="btn btn-warning btn-sm mx-2">Edit</Link>
+                <Link to={`${user.id}`} className="btn btn-info btn-sm">View</Link>
+                <Link to={`update-user/${user.id}`} className="btn btn-warning btn-sm mx-2">Edit</Link>
               </td>
             </tr>
           ))}

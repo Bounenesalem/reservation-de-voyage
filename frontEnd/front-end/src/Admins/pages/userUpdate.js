@@ -38,7 +38,7 @@ const UpdateUser = () => {
     axios.put(`http://127.0.0.1:8000/api/users/${id}`, formData)
       .then(response => {
         console.log('User updated successfully:', response.data);
-        navigate(`/users/${id}`);
+        navigate(`/dashboard/users`);
       })
       .catch(error => {
         console.error('There was an error updating the user!', error);
