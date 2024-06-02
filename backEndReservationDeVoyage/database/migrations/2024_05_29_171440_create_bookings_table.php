@@ -15,12 +15,11 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('trip_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-           $table->date('booking_date');
-           $table->enum('status',['pending','cancelled','confirmed'])->default('pending');
-
-           $table->timestamps();
-
+            $table->foreignId('trip_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->integer('num_people');
+            $table->string('status');
+            $table->timestamps();
         });
     }
 

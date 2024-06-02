@@ -2,147 +2,121 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\agency;
 use App\Models\booking;
 use App\Models\trip;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
-    public function reserve(Request $request, $id)
-    {
-        $trip = Trip::find($id);
-
-        if (!$trip) {
-            return response()->json(['message' => 'Trip not found'], 404);
-        }
-
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'numPeople' => 'required|integer|min=1',
-            'booking_date' => 'required|date',
-        ]);
-
-        $reservation = new booking();
-        $reservation->trip_id = $trip->id;
-        $reservation->name = $validatedData['name'];
-        $reservation->num_people = $validatedData['numPeople'];
-        $reservation->booking_date = $validatedData['booking_date'];
-        $reservation->status = 'pending'; // Default status
-        $reservation->user_id = Auth::id(); // Add user ID
-        $reservation->save();
-
-        return response()->json(['message' => 'Reservation successful']);
-    }
     public function index()
     {
-        return booking::with(['user', 'trip'])->get();
+        $bookings = booking::with(['user' ,'trip.destination', 'trip.agency'])->get();
+        return response()->json($bookings);
     }
 
     public function show($id)
     {
-        return booking::with(['user', 'trip'])->findOrFail($id);
+        return booking::with('trip')->findOrFail($id);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'num_people' => 'required|integer|min:1',
             'trip_id' => 'required|exists:trips,id',
-            'name' => 'required|string',
-            'booking_date' => 'required|date',
-            'num_people' => 'required|number',
-            'status' => 'required|string',
         ]);
 
-        return booking::create($request->all());
+        return booking::create($validatedData);
     }
 
     public function update(Request $request, $id)
     {
-        $reservation = booking::findOrFail($id);
-
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'trip_id' => 'required|exists:trips,id',
-            'name' => 'required|string',
-            'booking_date' => 'required|date',
-            'num_people' => 'required|number',
-            'status' => 'required|string',
+        $booking = booking::findOrFail($id);
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'status' => 'sometimes|required|string|max:255',
+            'num_people' => 'sometimes|required|integer|min:1',
+            'trip_id' => 'sometimes|required|exists:trips,id',
         ]);
 
-        $reservation->update($request->all());
+        $booking->update($validatedData);
 
-        return $reservation;
+        return $booking;
     }
 
     public function destroy($id)
     {
-        $reservation = booking::findOrFail($id);
-        $reservation->delete();
+        Booking::destroy($id);
+        return response()->json(['message' => 'Booking deleted successfully']);
+    }
 
-        return response(null, 204);
+    public function reserve(Request $request, $tripId)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'num_people' => 'required|integer|min:1',
+        ]);
+
+        // Retrieve the trip
+        $trip = trip::findOrFail($tripId);
+
+        // Calculate the total price
+        $totalPrice = $trip->price * $request->num_people;
+
+        // Create the booking
+        $booking = Booking::create([
+            'name' => $request->name,
+            'status' => 'confirmed',
+            'num_people' => $request->num_people,
+            'total_price' => $totalPrice, // Add the total price here
+            'trip_id' => $tripId,
+            'user_id' => auth()->id(), // Add this line to save user ID
+        ]);
+
+        return response()->json(['message' => 'Booking successful!', 'booking' => $booking], 201);
     }
 
 
-    // public function index()
-    // {
-    //     $booking = booking::all();
-    //     return response()->json($booking);
-    // }
+    public function userBookings(User $user)
+    {
+        $bookings = booking::where('user_id', $user->id)->with(['trip.destination', 'trip.agency'])->get();
+        return response()->json($bookings);
+    }
 
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'trip_id' => 'required|exists:trips,id',
-    //         'booking_date' => 'required|date',
-    //         'status' => 'required|string',
-    //     ]);
+    public function cancel(booking $reservation)
+    {
+        if ($reservation->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
-    //     $booking = booking::create($validatedData);
+        $reservation->status = 'Cancelled';
+        $reservation->save();
 
-    //     return response()->json(['message' => 'booking created successfully', 'data' => $booking], 201);
-    // }
+        return response()->json(['message' => 'Reservation cancelled successfully', 'reservation' => $reservation]);
+    }
 
-    // public function show($id)
-    // {
-    //     $booking = booking::find($id);
-    //     if (!$booking) {
-    //         return response()->json(['message' => 'booking not found'], 404);
-    //     }
-    //     return response()->json($booking);
-    // }
+// BookingController.php
 
-    // public function update(Request $request, $id)
-    // {
-    //     $booking = booking::find($id);
-    //     if (!$booking) {
-    //         return response()->json(['message' => 'booking not found'], 404);
-    //     }
+public function getBookings(Request $request)
+{
+    $agencyId = $request->query('agency_id');
+    if ($agencyId) {
+        $agency = agency::findOrFail($agencyId);
+        $bookings = booking::whereHas('trip', function ($query) use ($agencyId) {
+            $query->where('agency_id', $agencyId);
+        })->with(['user', 'trip.destination'])->get();
+    } else {
+        $bookings = booking::with(['user', 'trip.destination'])->get();
+    }
 
-    //     $validatedData = $request->validate([
-    //         'trip_id' => 'required|exists:trips,id',
-    //         'booking_date' => 'required|date',
-    //         'status' => 'required|string',
-
-    //     ]);
-
-    //     $booking->update($validatedData);
-
-    //     return response()->json(['message' => 'booking updated successfully', 'data' => $booking]);
-    // }
-
-    // public function destroy($id)
-    // {
-    //     $booking = booking::find($id);
-    //     if (!$booking) {
-    //         return response()->json(['message' => 'booking not found'], 404);
-    //     }
-
-    //     $booking->delete();
-
-    //     return response()->json(['message' => 'booking deleted successfully']);
-    // }
-
+    return response()->json($bookings);
+}
 
 }

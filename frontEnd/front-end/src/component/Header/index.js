@@ -3,11 +3,7 @@ import {Link} from "react-router-dom"
 
 function Header()
 {
-  function handleLogout(){
-    window.localStorage.removeItem('email');
-    window.location.pathname="/"
-  }
-
+  
     return(
         <div> 
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -32,9 +28,10 @@ function Header()
         <Nav>
           
           <NavDropdown title="Login">
-            <NavDropdown.Item></NavDropdown.Item>
-          {!window.localStorage.getItem('email') ? <><Link to="/login" className="mx-3">Login</Link>
-            <Link to="/register" className="mx-3">Register</Link> </>:<div onClick={handleLogout}>logout</div>}
+            <NavDropdown.Item>
+            <Link to="/users" className="mx-3">Login</Link>
+           <Link to="/users" className="mx-3">Register</Link> 
+            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
       </Container>

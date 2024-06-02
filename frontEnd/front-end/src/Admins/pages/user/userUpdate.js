@@ -13,7 +13,7 @@ const UpdateUser = () => {
   });
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/users/${id}`)
+    axios.get(`http://127.0.0.1:8000/api/user/${id}`)
       .then(response => {
         setFormData({
           name: response.data.name,
@@ -35,7 +35,7 @@ const UpdateUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://127.0.0.1:8000/api/users/${id}`, formData)
+    axios.put(`http://127.0.0.1:8000/api/user/${id}`, formData)
       .then(response => {
         console.log('User updated successfully:', response.data);
         navigate(`/dashboard/users`);

@@ -8,38 +8,43 @@ import Register from "../Register/index.js"
 import Dashboard from "../../Admins/dashboard/dashboard.js"
 
 
-import Destination from "../../Admins/pages/destination.js"
-import TripsTable from "../../Admins/pages/tripTable.js"
+import Destination from "../../Admins/pages/destination/destination.js"
+import TripsTable from "../../Admins/pages/trips/tripTable.js"
 import NavBar from "../../component/NavBar"
-import UpdateAgency from "../../Admins/pages/agencyUpdate.js"
-import CreateAgency from "../../Admins/pages/agencyCreate.js"
-import Booking from "../../Admins/pages/booking.js"
-import Agencies from "../../Admins/pages/agenciesList.js"
-import CreateTrip from "../../Admins/pages/tripCreate.js"
+import UpdateAgency from "../../Admins/pages/agency/agencyUpdate.js"
+import CreateAgency from "../../Admins/pages/agency/agencyCreate.js"
 
-import AgencyDetailsPage from "../../Admins/pages/agencyDetails.js"
-import PageAgencies from "../../Admins/pages/AgenciesAndTripsPage.js"
-import DestinationList from "../../Admins/pages/destinationList.js"
-import UpdateDestination from "../../Admins/pages/destinationUpdate.js"
-import DestinationDetails from "../../Admins/pages/destinationDetails.js"
-import UpdateTrip from "../../Admins/pages/tripUpdate.js"
-import TripDetailsPage from "../../Admins/pages/tripDetails.js"
+import Agencies from "../../Admins/pages/agency/agenciesList.js"
+import CreateTrip from "../../Admins/pages/trips/tripCreate.js"
+
+import AgencyDetailsPage from "../../Admins/pages/agency/agencyDetails.js"
+import PageAgencies from "../../Admins/pages/agency/AgenciesAndTripsPage.js"
+import DestinationList from "../../Admins/pages/destination/destinationList.js"
+import UpdateDestination from "../../Admins/pages/destination/destinationUpdate.js"
+import DestinationDetails from "../../Admins/pages/destination/destinationDetails.js"
+import UpdateTrip from "../../Admins/pages/trips/tripUpdate.js"
+import TripDetailsPage from "../../Admins/pages/trips/tripDetails.js"
 import AgenciesPage from "../../Users/selectAgency.js"
-import Bookings from "../../Users/booking.js"
-import UserList from "../../Admins/pages/userList.js"
-import UserDetails from "../../Admins/pages/userDetails.js"
-import UpdateUser from "../../Admins/pages/userUpdate.js"
-import CreateUser from "../../Admins/pages/UserCreate.js"
-import BookingList from "../../Admins/pages/bookingList.js"
-// import User from "../../Admins/pages/user.js"
+import Bookings from "../../Users/Booking.js"
+import UserList from "../../Admins/pages/user/userList.js"
+import UserDetails from "../../Admins/pages/user/userDetails.js"
+import UpdateUser from "../../Admins/pages/user/userUpdate.js"
+import CreateUser from "../../Admins/pages/user/UserCreate.js"
+// import BookingList from "../../Admins/pages/booking/bookingList.js"
+import BookingCreate from "../../Admins/pages/booking/bookingCreate.js"
+import Users from "../../Users/index.js"
+import BookingList from "../../Admins/pages/booking/bookingList.js"
+import AdminPanel from "../../Admins/pages/admin.js"
+
 
 
 
 
 function Layout(){
     return(
+
     
-    <BrowserRouter>
+ <BrowserRouter>
         
        
         
@@ -47,6 +52,10 @@ function Layout(){
           <Route path='/' element={<Home/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/contact' element={<Contact/>} /> 
+         
+          
+
+         
 
           <Route path='/dashboard' element={<Dashboard/>}>    
             <Route path="agencyAndTrip" element={<PageAgencies/>}/> 
@@ -60,9 +69,7 @@ function Layout(){
             <Route path="users/create-user" element={<CreateUser/>} />
             <Route path="users/update-user/:id" element={<UpdateUser />} />
 
-
-            <Route path="booking" element={<Booking/>}/>
-            <Route path="bookings" element={<BookingList/>}/>
+            
            
             <Route path="destinations" element={<DestinationList/>}/>
             <Route path="destinations/Create" element={<Destination/>}/>
@@ -74,15 +81,20 @@ function Layout(){
             <Route path="TripsTable/trip" element={<CreateTrip/>}/>
             <Route path="TripsTable/:id" element={<UpdateTrip/>}/>
             <Route path="TripsTable/trip-details/:id" element={<TripDetailsPage/>}/>
+
+            <Route path="BookingsTable" element={<BookingList/>}/>
            
       
             </Route>
 
          
-          {/* <Route path='/users' element={<User/>} /> */}
+          <Route path='/users' element={<Users/>} />
           <Route path="navbar" element={<NavBar/>}/>
           <Route path="select" element={<AgenciesPage/>}/>
           <Route path="book" element={<Bookings/>}/>
+          <Route path="admin" element={<AdminPanel/>}/>
+
+          
 
          
 
@@ -91,5 +103,5 @@ function Layout(){
           <Route path='/Register' element={<Register/>} />
         </Routes>
         </BrowserRouter>)
-}
-export default Layout
+} 
+export default Layout    

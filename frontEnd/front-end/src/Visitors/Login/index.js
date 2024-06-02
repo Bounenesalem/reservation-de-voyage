@@ -82,7 +82,7 @@ const Login = () => {
     axios.post('http://127.0.0.1:8000/api/login', formData)
       .then(response => {
         localStorage.setItem('token', response.data.access_token);
-        navigate('/select');
+        navigate('/users');
       })
       .catch(error => {
         setError('Invalid email or password.');

@@ -59,7 +59,7 @@ const UserList = () => {
 
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/users')
+    axios.get('http://127.0.0.1:8000/api/user')
       .then(response => {
         setUsers(response.data);
       })
@@ -70,7 +70,7 @@ const UserList = () => {
 
   async function deleteUser(id){
     try{ 
-   const res=await  axios.delete( `http://127.0.0.1:8000/api/users/${id}`);
+   const res=await  axios.delete( `http://127.0.0.1:8000/api/user/${id}`);
      if(res.status===200){
       setRunUsers((prev)=> prev+1)
      }
@@ -86,6 +86,7 @@ const UserList = () => {
       <table className="table table-striped">
         <thead>
           <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>Actions</th>
@@ -94,6 +95,7 @@ const UserList = () => {
         <tbody>
           {users.map(user => (
             <tr key={user.id}>
+              <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>

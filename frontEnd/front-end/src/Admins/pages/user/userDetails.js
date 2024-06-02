@@ -9,7 +9,7 @@ const UserDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/users/${id}`)
+    axios.get(`http://127.0.0.1:8000/api/user/${id}`)
       .then(response => {
         setUser(response.data);
         setLoading(false);

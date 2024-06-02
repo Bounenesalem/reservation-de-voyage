@@ -80,7 +80,7 @@ const CreateUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/api/users', formData)
+    axios.post('http://127.0.0.1:8000/api/user', formData)
       .then(response => {
         console.log('User created successfully:', response.data);
         navigate('/dashboard/users');

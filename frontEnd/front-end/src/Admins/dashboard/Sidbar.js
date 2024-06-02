@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-export default function Sidbar() {
+export default function SidBar() {
   return (
     <div  className='side-bar'>
 
@@ -11,7 +11,7 @@ export default function Sidbar() {
         <Link to={"/dashboard/tripsTable"} className="mx-3">TripsTable</Link>
         <Link to={"/dashboard/agencyAndTrip"} className="mx-3">Agencies & Trips</Link>
         <Link to={"/dashboard/users"} className="mx-3">List Users </Link>
-        <Link to={"/dashboard/bookings"} className="mx-3">Bookings</Link>
+        <Link to={"/dashboard/BookingsTable"} className="mx-3">Bookings</Link>
 
         
 

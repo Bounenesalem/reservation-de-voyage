@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\booking;
 use App\Models\User;
 use Illuminate\Http\Request;
 // use app\Models\User;
@@ -54,9 +55,26 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'user not found'], 404);
+        }
+
         $user->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'user deleted successfully']);
+
+
+
     }
+
+    // public function getUserBookings(Request $request)
+    // {
+    //     $user = $request->user();
+
+    //     $bookings = booking::where('user_id', $user->id)->with('trip.destination', 'trip.agency')->get();
+
+    //     return response()->json($bookings);
+    // }
 }

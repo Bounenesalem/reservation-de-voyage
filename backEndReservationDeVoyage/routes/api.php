@@ -23,19 +23,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+    // Route::post('/trip/{trip}/reserve', [BookingController::class, 'reserve']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/trip/{trip}/reserve', [BookingController::class, 'reserve']);
+        Route::get('/user/{user}/bookings', [BookingController::class, 'userBookings']);
+        Route::delete('/reservation/{reservation}', [BookingController::class, 'cancel']);
+    });
+
+
 route::apiResource('destination',DestinationController::class);
 route::apiResource('agency',AgencyController::class);
 route::apiResource('trip',TripController::class)->shallow();
-route::apiResource('booking',BookingController::class);
-route::apiResource('users',UserController::class);
+route::apiResource('bookings',BookingController::class);
 Route::get('agency/{id}/trip', [AgencyController::class, 'getTrips']);
-Route::post('trip/{id}/reserve', [BookingController::class, 'reserve']);
+Route::get('/bookings', [BookingController::class, 'getBookings']);
+// Route::apiResource('/user', UserController::class);
+
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 route::post('/home',[HomeController::class,'index']);
 route::get('/search',[SearchController::class,'search']);
@@ -43,14 +57,7 @@ route::get('/search',[SearchController::class,'search']);
 
 
 
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::get('/users', [UserController::class, 'index']);
-//     Route::get('/users/{id}', [UserController::class, 'show']);
-//     Route::post('/users', [UserController::class, 'store']);
-//     Route::put('/users/{id}', [UserController::class, 'update']);
-//     Route::delete('/users/{id}', [UserController::class, 'destroy']);
-// });
 
 
-// Route::post('register',[registerController::class,'register'] );
-// Route::post('login',[registerController::class,'login'] );
+
+
