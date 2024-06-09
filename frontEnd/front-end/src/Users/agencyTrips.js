@@ -56,66 +56,7 @@
 // export default AgencyTrips;
 
 
-// without search
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { Container, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
-// const AgencyTrips = ({ selectedAgency, setSelectedTrip, setView }) => {
-//   const [trips, setTrips] = useState([]);
-
-//   useEffect(() => {
-//     if (selectedAgency) {
-//       axios.get(`http://127.0.0.1:8000/api/agency/${selectedAgency.id}/trip`)
-//         .then(response => {
-//           setTrips(response.data);
-//         })
-//         .catch(error => {
-//           console.error(`Error fetching trips for agency
-//           ${selectedAgency.id}!`, error);
-//         });
-//         }
-//         }, [selectedAgency]);
-        
-//         const handleTripSelect = (trip) => {
-//         setSelectedTrip(trip);
-//         setView('tripDetails');
-//         };
-        
-//         return (
-//         <Container>
-//         <h3>Trips for {selectedAgency ? selectedAgency.name : 'No agency selected'}</h3>
-//         <TableContainer component={Paper}>
-//         <Table>
-//         <TableHead>
-//         <TableRow>
-//         <TableCell>Destination Name</TableCell>
-//         <TableCell>Start Date</TableCell>
-//         <TableCell>End Date</TableCell>
-//         <TableCell>Price</TableCell>
-//         <TableCell>Select</TableCell>
-//         </TableRow>
-//         </TableHead>
-//         <TableBody>
-//         {trips.map(trip => (
-//         <TableRow key={trip.id}>
-//         <TableCell>{trip.destination ? trip.destination.name : 'No destination'}</TableCell>
-//         <TableCell>{trip.start_date}</TableCell>
-//         <TableCell>{trip.end_date}</TableCell>
-//         <TableCell>{trip.price}</TableCell>
-//         <TableCell>
-//         <Button variant="contained" onClick={() => handleTripSelect(trip)}>Select</Button>
-//         </TableCell>
-//         </TableRow>
-//         ))}
-//         </TableBody>
-//         </Table>
-//         </TableContainer>
-//         </Container>
-//         );
-//         };
-        
-//         export default AgencyTrips;
 
 
 import React, { useState, useEffect } from 'react';
@@ -200,8 +141,13 @@ const AgencyTrips = ({ selectedAgency, setSelectedTrip, setView }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Button onClick={() => setView('selectAgency')}>عودة</Button>
+
     </Container>
   );
 };
 
 export default AgencyTrips;
+
+
+

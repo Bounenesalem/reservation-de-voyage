@@ -49,3 +49,30 @@ const TripDetails = ({ trip, onBookingClick }) => {
 
 export default TripDetails;
 
+
+
+// import React from 'react';
+// import { Container, Paper, Typography, Grid } from '@mui/material';
+// import BookingForm from './bookingForm';
+
+// const TripDetails = ({ selectedTrip }) => {
+//   return (
+//     <Container>
+//       <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
+//         <Typography variant="h4" gutterBottom>
+//           تفاصيل الرحلة
+//         </Typography>
+//         <Typography variant="body1"><strong>الوجهة:</strong> {selectedTrip.destination ? selectedTrip.destination.name : 'لا يوجد وجهة'}</Typography>
+//         <Typography variant="body1"><strong>تاريخ البدء:</strong> {selectedTrip.start_date}</Typography>
+//         <Typography variant="body1"><strong>تاريخ الانتهاء:</strong> {selectedTrip.end_date}</Typography>
+//         <Typography variant="body1"><strong>السعر:</strong> {selectedTrip.price}</Typography>
+//         <Typography variant="body1"><strong>الوصف:</strong> {selectedTrip.description}</Typography>
+//         <Typography variant="body1"><strong>الوكالة:</strong> {selectedTrip.agency ? selectedTrip.agency.name : 'لا يوجد وكالة'}</Typography>
+//       </Paper>
+//       <BookingForm trip={selectedTrip} />
+//     </Container>
+//   );
+// };
+
+// export default TripDetails;
+

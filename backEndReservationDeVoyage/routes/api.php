@@ -33,8 +33,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     // Route::post('/trip/{trip}/reserve', [BookingController::class, 'reserve']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/trip/{trip}/reserve', [BookingController::class, 'reserve']);
+        // Route::post('/booking/{booking}/verify-payment', [BookingController::class, 'verifyPayment']);
+
         Route::get('/user/{user}/bookings', [BookingController::class, 'userBookings']);
         Route::delete('/reservation/{reservation}', [BookingController::class, 'cancel']);
+
     });
 
 

@@ -64,6 +64,9 @@ class BookingController extends Controller
             'num_people' => 'required|integer|min:1',
         ]);
 
+
+
+
         // Retrieve the trip
         $trip = trip::findOrFail($tripId);
 
@@ -119,4 +122,41 @@ public function getBookings(Request $request)
     return response()->json($bookings);
 }
 
+
+// public function verifyPayment(Request $request, $bookingId)
+// {
+//     $request->validate([
+//         'payment_code' => 'required|string',
+//     ]);
+
+//     $booking = booking::findOrFail($bookingId);
+
+//     if ($booking->user_id !== Auth::id()) {
+//         return response()->json(['error' => 'Unauthorized'], 403);
+//     }
+
+//     // هنا يجب عليك التحقق من صحة رمز الدفع مع خدمة الدفع الخاصة بك
+//     // لنفترض أن التحقق قد تم بنجاح
+//     $isPaymentSuccessful = $this->checkPaymentWithService($request->payment_code);
+
+//     if ($isPaymentSuccessful) {
+//         $booking->status = 'confirmed';
+//         $booking->save();
+
+//         return response()->json(['message' => 'Payment verified and booking confirmed', 'booking' => $booking]);
+//     } else {
+//         return response()->json(['error' => 'Payment verification failed'], 400);
+//     }
+// }
+
+// private function checkPaymentWithService($paymentCode)
+// {
+//     // هنا يجب أن تضيف منطق التحقق مع خدمة الدفع الخاصة بك
+//     // لنفترض أن التحقق يتم دائمًا بنجاح لغرض هذا المثال
+//     return true;
+// }
+
+
 }
+
+
