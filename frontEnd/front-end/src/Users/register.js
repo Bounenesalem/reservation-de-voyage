@@ -92,7 +92,7 @@ const Register = ({ setView }) => {
     event.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/register', { name, email, password });
-      setView('login');
+      setView('/login');
     } catch (error) {
       setError('Registration failed');
     }
