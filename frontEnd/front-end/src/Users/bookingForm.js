@@ -77,6 +77,7 @@ const BookingForm = ({ tripId, onBookingComplete }) => {
   const [bookingDetails, setBookingDetails] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const [trip, setTrip] = useState(null);
+  const [paymentScreenshot, setPaymentScreenshot] = useState(null);
 
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/trip/${tripId}`)
@@ -93,14 +94,29 @@ const BookingForm = ({ tripId, onBookingComplete }) => {
     setShowPayment(true);
   };
 
+  const handleScreenshotUpload = (event) => {
+    setPaymentScreenshot(event.target.files[0]);
+  };
+
   const confirmPayment = async () => {
+    if (!paymentScreenshot) {
+      setError('يرجى تحميل صورة إثبات الدفع!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('num_people', numPeople);
+    formData.append('payment_screenshot', paymentScreenshot);
+
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(`http://127.0.0.1:8000/api/trip/${trip.id}/reserve`, 
-        { name, num_people: numPeople },
+        formData,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
@@ -177,7 +193,13 @@ const BookingForm = ({ tripId, onBookingComplete }) => {
                 <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
                   تفاصيل الدفع
                 </Typography>
-                <Typography variant="body1">رقم الوكالة: {trip.agency ? trip.agency.phone : 'لا يوجد رقم وكالة'}</Typography>
+                <Typography variant="body1">رقم الوكالة: {trip.agency ? trip.agency.payment_number : 'لا يوجد رقم وكالة'}</Typography>
+                <input
+                  accept="image/*"
+                  type="file"
+                  onChange={handleScreenshotUpload}
+                  style={{ marginTop: '20px' }}
+                />
                 <Button variant="contained" color="secondary" fullWidth onClick={confirmPayment} style={{ marginTop: '20px' }}>
                   تأكيد الدفع
                 </Button>
@@ -204,104 +226,3 @@ const BookingForm = ({ tripId, onBookingComplete }) => {
 };
 
 export default BookingForm;
-
-
-
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// const BookingForm = ({ trip, onBookingComplete }) => {
-//   const [name, setName] = useState('');
-//   const [numPeople, setNumPeople] = useState(1);
-//   const [paymentCode, setPaymentCode] = useState('');
-//   const [success, setSuccess] = useState('');
-//   const [error, setError] = useState('');
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const token = localStorage.getItem('token');
-
-//     try {
-//       const response = await axios.post(`http://127.0.0.1:8000/api/trip/${trip.id}/reserve`, 
-//         { name, num_people: numPeople },
-//         {
-//           headers: {
-//             'Authorization': `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       const bookingId = response.data.booking.id;
-      
-//       const paymentResponse = await axios.post(`http://127.0.0.1:8000/api/booking/${bookingId}/verify-payment`, 
-//         { payment_code: paymentCode },
-//         {
-//           headers: {
-//             'Authorization': `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       if (paymentResponse.data.message === 'Payment verified and booking confirmed') {
-//         setSuccess('Booking successful and payment verified!');
-//         setError('');
-//         onBookingComplete();
-//       } else {
-//         setError('Payment verification failed.');
-//         setSuccess('');
-//       }
-
-//     } catch (error) {
-//       setError('There was an error making the reservation!');
-//       setSuccess('');
-//       console.error(error);
-//     }
-//   };
-
-//   return (
-//     <div className="container">
-//       <h2>Book Your Trip</h2>
-//       <form onSubmit={handleSubmit}>
-//         <div className="mb-3">
-//           <label htmlFor="name" className="form-label">Name</label>
-//           <input 
-//             type="text" 
-//             className="form-control" 
-//             id="name" 
-//             value={name} 
-//             onChange={(e) => setName(e.target.value)} 
-//             required 
-//           />
-//         </div>
-//         <div className="mb-3">
-//           <label htmlFor="numPeople" className="form-label">Number of People</label>
-//           <input 
-//             type="number" 
-//             className="form-control" 
-//             id="numPeople" 
-//             value={numPeople} 
-//             onChange={(e) => setNumPeople(parseInt(e.target.value))} 
-//             required 
-//             min="1" 
-//           />
-//         </div>
-//         <div className="mb-3">
-//           <label htmlFor="paymentCode" className="form-label">Payment Code</label>
-//           <input 
-//             type="text" 
-//             className="form-control" 
-//             id="paymentCode" 
-//             value={paymentCode} 
-//             onChange={(e) => setPaymentCode(e.target.value)} 
-//             required 
-//           />
-//         </div>
-//         <button type="submit" className="btn btn-primary">Reserve</button>
-//       </form>
-//       {success && <div className="alert alert-success mt-3">{success}</div>}
-//       {error && <div className="alert alert-danger mt-3">{error}</div>}
-//     </div>
-//   );
-// };
-
-// export default BookingForm;
