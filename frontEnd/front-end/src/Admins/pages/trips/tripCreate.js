@@ -7,11 +7,14 @@ const CreateTrip = () => {
     const navigate=useNavigate();     
     const [formData, setFormData] = useState({
         destinationId:'',
+        Ville_de_depart:'',
         agencyId:'',
         description:'',
+        Time:'',
         startDate: '',
         endDate: '',
         price: '',
+
         // availableSeats: ''
     });
 
@@ -100,10 +103,22 @@ const CreateTrip = () => {
                     ))}
                 </select>
                 </div>
+
+                <div className="mb-3">
+                <label htmlFor="Ville_de_depart"> Ville de depart:</label>
+                <input type="text" id="Ville_de_depart" name="Ville_de_depart" onChange={handleInputChange} className='form-control' />
+                </div>
+
                 <div className="mb-3">
                 <label htmlFor="description"> Description:</label>
                 <input type="text" id="description" name="description" onChange={handleInputChange} className='form-control' />
                 </div>
+
+                <div className="mb-3">
+                <label htmlFor="Time">Time de depart:</label>
+                <input type="time" id="Time" name="Time" onChange={handleInputChange} className='form-control' />
+                </div>
+
                 <div className="mb-3">
                 <label htmlFor="start_date">Start Date:</label>
                 <input type="date" id="start_date" name="start_date" onChange={handleInputChange} className='form-control' />

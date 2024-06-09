@@ -60,7 +60,9 @@ const TripInformation = ({ tripId, numPeople }) => {
       {trip ? (
         <div>
           <p><strong>Destination:</strong> {trip.destination ? trip.destination.name : 'No destination'}</p>
+          <p><strong>Ville de depart:</strong> {trip.Ville_de_depart}</p>
           <p><strong>Agency:</strong> {trip.agency ? trip.agency.name : 'No agency'}</p>
+          <p><strong>Time de depart:</strong> {trip.Time}</p>
           <p><strong>Start Date:</strong> {trip.start_date}</p>
           <p><strong>End Date:</strong> {trip.end_date}</p>
           <p><strong>Price per Person:</strong> {trip.price}</p>
@@ -69,6 +71,7 @@ const TripInformation = ({ tripId, numPeople }) => {
       ) : (
         <p>Loading trip information...</p>
       )}
+      
     </Container>
   );
 };

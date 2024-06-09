@@ -35,6 +35,8 @@ const PageAgencies = () => {
           <thead>
             <tr>
               <th>Destination Name</th>
+              <th> Ville de depart</th>
+              <th>Time de voyage</th>
               <th>Start Date</th>
               <th>End Date</th>
               <th>Price</th>
@@ -45,6 +47,8 @@ const PageAgencies = () => {
             {agency.trips.map(trip => (
               <tr key={trip.id}>
                  <td>{trip.destination.name}</td>
+                 <td>{trip. Ville_de_depart}</td>
+                 <td>{trip.Time}</td>
                 <td>{trip.start_date}</td>
                 <td>{trip.end_date}</td>
                 <td>{trip.price}</td>

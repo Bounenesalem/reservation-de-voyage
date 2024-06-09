@@ -7,10 +7,13 @@ function UpdateTrip(){
     const [formData, setFormData] = useState({
         destination_id: '',
         agency_id: '',
+        Ville_de_depart: '',
         description: '',
+        Time:'',
         startDate: '',
         endDate: '',
         price: '',
+
     });
 
     const [destinations, setDestinations] = useState([]);
@@ -47,7 +50,9 @@ function UpdateTrip(){
             setFormData({
                 destination_id: trip.destination_id,
                 agency_id: trip.agency_id,
+                Ville_de_depart: trip.Ville_de_depart,
                 description: trip.description,
+                Time:trip.Time,
                 startDate: trip.start_date,
                 endDate: trip.end_date,
                 price: trip.price,
@@ -105,9 +110,19 @@ function UpdateTrip(){
                                 </select>
                             </div>
                             <div className="mb-3">
+                                <label htmlFor="Ville_de_depart">Ville de depart:</label>
+                                <input type="text" id="Ville_de_depart" name="Ville_de_depart" onChange={handleInputChange} className='form-control' value={formData.Ville_de_depart} />
+                            </div>
+                            <div className="mb-3">
                                 <label htmlFor="description">Description:</label>
                                 <input type="text" id="description" name="description" onChange={handleInputChange} className='form-control' value={formData.description} />
                             </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="Time">Time de depatr:</label>
+                                <input type="time" id="Time" name="Time" onChange={handleInputChange} className='form-control' value={formData.Time} />
+                            </div>
+
                             <div className="mb-3">
                                 <label htmlFor="startDate">Start Date:</label>
                                 <input type="date" id="startDate" name="startDate" onChange={handleInputChange} className='form-control' value={formData.startDate} />

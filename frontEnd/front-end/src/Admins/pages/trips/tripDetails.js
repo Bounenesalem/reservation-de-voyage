@@ -22,7 +22,7 @@ const TripDetailsPage = () => {
     if (!trip) {
         return <div>Loading...</div>;
     }
-
+    
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -31,8 +31,10 @@ const TripDetailsPage = () => {
                         <h1>Trip Details</h1>
                         <p><strong>Agency:</strong> {trip.agency.name}</p>
                         <p><strong>Destination:</strong> {trip.destination.name}</p>
+                        <p><strong>Ville de depart:</strong> {trip.Ville_de_depart}</p>
                         <p><strong>Description:</strong> {trip.description}</p>
-                        <p><strong>Start Date:</strong> {trip.start_date}</p>
+                        <p><strong>Time de depart:</strong> {trip.start_date}</p>
+                        <p><strong>Start Date:</strong> {trip.Time}</p>
                         <p><strong>End Date:</strong> {trip.end_date}</p>
                         <p><strong>Price:</strong> {trip.price}</p>
                     </div>

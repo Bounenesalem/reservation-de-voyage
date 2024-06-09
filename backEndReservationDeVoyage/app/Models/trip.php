@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class trip extends Model
 {
     use HasFactory;
-    protected $fillable = ['destination_id','agency_id','description', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['destination_id','Ville_de_depart','agency_id','Time','description', 'start_date', 'end_date', 'price'];
 
     public function destination(): BelongsTo
     {

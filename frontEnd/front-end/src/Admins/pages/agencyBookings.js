@@ -28,6 +28,7 @@ const AgencyBookings = ({ agency }) => {
           <tr>
             <th>User Name </th>
             <th>Destination Name </th>
+            <th>Ville de depart</th>
             <th>Agency Name </th>
             <th> Start Date</th>
             <th> End Date </th>
@@ -40,7 +41,9 @@ const AgencyBookings = ({ agency }) => {
             <tr key={booking.id}>
               <td>{booking.user ? booking.user.name : 'مستخدم غير معروف'}</td>
               <td>{booking.trip && booking.trip.destination ? booking.trip.destination.name : 'لا توجد وجهة'}</td>
+              <td>{booking.trip ? booking.trip.Ville_de_depart :  'لا توجد وجهة'}</td>
               <td>{booking.trip && booking.trip.agency ? booking.trip.agency_id : '  there is no agency'}</td>
+              <td>{booking.trip ? booking.trip.Time : 'لا يوجد تاريخ'}</td>
               <td>{booking.trip ? booking.trip.start_date : 'لا يوجد تاريخ'}</td>
               <td>{booking.trip ? booking.trip.end_date : 'لا يوجد تاريخ'}</td>
               <td>{booking.num_people}</td>

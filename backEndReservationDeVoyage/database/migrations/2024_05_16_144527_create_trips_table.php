@@ -18,6 +18,8 @@ class CreateTripsTable extends Migration
             $table->id();
             $table->foreignId('destination_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('agency_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->text('Ville_de_depart');
+            $table->time('Time');
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date');

@@ -50,8 +50,10 @@ const TripsTable = () => {
         <tr key={index}>
             <td>{index +1}</td>
             <td>{trip.destination.name}</td>
+            <td>{trip.Ville_de_depart }</td>
             <td>{trip.agency.name}</td>
             <td>{trip.description }</td>
+            <td>{trip.Time }</td>
             <td>{trip.start_date }</td>
             <td>{trip.end_date }</td>
             <td>{trip.price }</td>
@@ -76,8 +78,10 @@ const TripsTable = () => {
                     <tr>
                         <th>Trip ID</th>
                         <th>Destination</th>
+                        <th>Ville de depart</th>
                         <th>Agency</th>
                         <th>Description</th>
+                        <th>Time de depart</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Price</th>

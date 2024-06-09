@@ -1,47 +1,62 @@
 import Header from "../../component/Header"
+import Hero from "../../component/hero"
+import AbutImage from "../../asserts/5.jpeg"
+import Footer from "../../component/Footer"
 
-// function Home(){
+function Home(){
     
-//     return <div>
-//         <Header/>
-//         <h1>welcome to home page</h1>
-//     </div> 
-// }
+    return <div>
+        <>
+        <Header/>
+        <Hero
+        cName="hero"
+        heroImg={AbutImage}
+        title="Bienvenue sur noter site de voyages
+              enter les villes de mauritanie. "
+              texte="choisiser le vol qui vous convient."
+              buttontexte="Reserver"
+              url="/users"
+              btnClass="show"
+        />
+        <Footer/>
+    </>
+    </div> 
+}
 
-// export default Home
+export default Home
 
 // Home.js
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
 
-const Home = () => {
-    const [destinations, setDestinations] = useState([]);
+// const Home = () => {
+//     const [destinations, setDestinations] = useState([]);
 
-    useEffect(() => {
-        axios.post(' http://127.0.0.1:8000/api/home')
-            .then(response => {
-                setDestinations(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
+//     useEffect(() => {
+//         axios.post(' http://127.0.0.1:8000/api/home')
+//             .then(response => {
+//                 setDestinations(response.data);
+//             })
+//             .catch(error => {
+//                 console.error(error);
+//             });
+//     }, []);
 
-    return (
-        <div>
-            <Header/>
-            <h1>Popular Destinations</h1>
-            {destinations.map(destination => (
-                <div key={destination.id}>
-                    <h2>{destination.name}</h2>
-                    <p>{destination.description}</p>
-                </div>
-            ))}
-        </div>
-    );
-};
+//     return (
+//         <div>
+//             <Header/>
+//             <h1>Popular Destinations</h1>
+//             {destinations.map(destination => (
+//                 <div key={destination.id}>
+//                     <h2>{destination.name}</h2>
+//                     <p>{destination.description}</p>
+//                 </div>
+//             ))}
+//         </div>
+//     );
+// };
 
-export default Home;
+// export default Home;
 
 
 

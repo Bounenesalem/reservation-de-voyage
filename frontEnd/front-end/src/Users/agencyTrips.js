@@ -167,6 +167,8 @@ const AgencyTrips = ({ selectedAgency, setSelectedTrip, setView }) => {
           <TableHead>
             <TableRow>
               <TableCell>Destination Name</TableCell>
+              <TableCell>Ville de depart</TableCell>
+              <TableCell>Time</TableCell>
               <TableCell>Start Date</TableCell>
               <TableCell>End Date</TableCell>
               <TableCell>Price</TableCell>
@@ -178,6 +180,8 @@ const AgencyTrips = ({ selectedAgency, setSelectedTrip, setView }) => {
               filteredTrips.map(trip => (
                 <TableRow key={trip.id}>
                   <TableCell>{trip.destination ? trip.destination.name : 'No destination'}</TableCell>
+                  <TableCell>{trip.Ville_de_depart}</TableCell>
+                  <TableCell>{trip.Time}</TableCell>
                   <TableCell>{trip.start_date}</TableCell>
                   <TableCell>{trip.end_date}</TableCell>
                   <TableCell>{trip.price}</TableCell>
