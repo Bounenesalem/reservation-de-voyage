@@ -33,8 +33,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     // Route::post('/trip/{trip}/reserve', [BookingController::class, 'reserve']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/trip/{trip}/reserve', [BookingController::class, 'reserve']);
-        // Route::post('/booking/{booking}/verify-payment', [BookingController::class, 'verifyPayment']);
-
         Route::get('/user/{user}/bookings', [BookingController::class, 'userBookings']);
         Route::delete('/reservation/{reservation}', [BookingController::class, 'cancel']);
 
@@ -48,6 +46,12 @@ route::apiResource('bookings',BookingController::class);
 Route::get('agency/{id}/trip', [AgencyController::class, 'getTrips']);
 Route::get('/bookings', [BookingController::class, 'getBookings']);
 // Route::apiResource('/user', UserController::class);
+
+Route::get('/pending-bookings', [BookingController::class, 'getPendingBookings']);
+Route::put('/bookings/{id}/approve', [BookingController::class, 'approveBooking']);
+Route::put('/bookings/{id}/reject', [BookingController::class, 'rejectBooking']);
+
+
 
 
 Route::post('/register', [AuthController::class, 'register']);

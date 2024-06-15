@@ -7,9 +7,11 @@ use App\Models\booking;
 use App\Models\trip;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
 {
@@ -62,30 +64,36 @@ class BookingController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'num_people' => 'required|integer|min:1',
+            'payment_method' => 'required|string',
+            'screenshot' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $trip = Trip::findOrFail($tripId);
 
-
-
-        // Retrieve the trip
-        $trip = trip::findOrFail($tripId);
-
-        // Calculate the total price
         $totalPrice = $trip->price * $request->num_people;
 
-        // Create the booking
+        $user = auth()->user();
+
+        // رفع الصورة وحفظ المسار
+        $screenshotPath = $request->file('screenshot')->store('screenshots', 'public');
+
         $booking = Booking::create([
+            'user_id' => $user->id,
+            'trip_id' => $trip->id,
             'name' => $request->name,
-            'status' => 'confirmed',
             'num_people' => $request->num_people,
-            'total_price' => $totalPrice, // Add the total price here
-            'trip_id' => $tripId,
-            'user_id' => auth()->id(), // Add this line to save user ID
+            'payment_method' => $request->payment_method,
+            'status' => 'pending',
+            'screenshot' => $screenshotPath,
         ]);
 
-        return response()->json(['message' => 'Booking successful!', 'booking' => $booking], 201);
+        return response()->json([
+            'booking' => $booking,
+            'trip' => $trip,
+            'agency' => $trip->agency,
+            'destination' => $trip->destination,
+        ]);
     }
-
 
     public function userBookings(User $user)
     {
@@ -107,56 +115,98 @@ class BookingController extends Controller
 
 // BookingController.php
 
+// public function getBookings(Request $request)
+// {
+//     $agencyId = $request->query('agency_id');
+//     if ($agencyId) {
+//         $agency = agency::findOrFail($agencyId);
+//         $bookings = booking::whereHas('trip', function ($query) use ($agencyId) {
+//             $query->where('agency_id', $agencyId);
+//         })->with(['user', 'trip.destination'])->get();
+//     } else {
+//         $bookings = booking::with(['user', 'trip.destination'])->get();
+//     }
+
+//     return response()->json($bookings);
+// }
+
 public function getBookings(Request $request)
 {
     $agencyId = $request->query('agency_id');
     if ($agencyId) {
-        $agency = agency::findOrFail($agencyId);
-        $bookings = booking::whereHas('trip', function ($query) use ($agencyId) {
+        $agency = Agency::findOrFail($agencyId);
+        $bookings = Booking::whereHas('trip', function ($query) use ($agencyId) {
             $query->where('agency_id', $agencyId);
         })->with(['user', 'trip.destination'])->get();
     } else {
-        $bookings = booking::with(['user', 'trip.destination'])->get();
+        $bookings = Booking::with(['user', 'trip.destination'])->get();
+    }
+
+    // تعديل لعرض الصورة بشكل صحيح
+    foreach ($bookings as $booking) {
+        if ($booking->screenshot) {
+            $booking->screenshot_url = Storage::url($booking->screenshot);
+        }
     }
 
     return response()->json($bookings);
 }
 
 
-// public function verifyPayment(Request $request, $bookingId)
-// {
-//     $request->validate([
-//         'payment_code' => 'required|string',
-//     ]);
 
-//     $booking = booking::findOrFail($bookingId);
+// trying
 
-//     if ($booking->user_id !== Auth::id()) {
-//         return response()->json(['error' => 'Unauthorized'], 403);
-//     }
+public function getPendingBookings()
+{
+    $bookings = Booking::where('status', 'pending')->with('trip.destination', 'trip.agency')->get();
+    return response()->json($bookings);
+}
 
-//     // هنا يجب عليك التحقق من صحة رمز الدفع مع خدمة الدفع الخاصة بك
-//     // لنفترض أن التحقق قد تم بنجاح
-//     $isPaymentSuccessful = $this->checkPaymentWithService($request->payment_code);
+public function approveBooking($id)
+{
+    $booking = Booking::find($id);
 
-//     if ($isPaymentSuccessful) {
-//         $booking->status = 'confirmed';
-//         $booking->save();
+    if (!$booking) {
+        return response()->json(['message' => 'الحجز غير موجود'], 404);
+    }
 
-//         return response()->json(['message' => 'Payment verified and booking confirmed', 'booking' => $booking]);
-//     } else {
-//         return response()->json(['error' => 'Payment verification failed'], 400);
-//     }
-// }
+    $booking->status = 'confirmed';
+    $booking->save();
 
-// private function checkPaymentWithService($paymentCode)
-// {
-//     // هنا يجب أن تضيف منطق التحقق مع خدمة الدفع الخاصة بك
-//     // لنفترض أن التحقق يتم دائمًا بنجاح لغرض هذا المثال
-//     return true;
-// }
+    return response()->json(['message' => 'تمت الموافقة على الحجز']);
+}
 
+public function rejectBooking($id)
+{
+    $booking = Booking::find($id);
 
+    if (!$booking) {
+        return response()->json(['message' => 'الحجز غير موجود'], 404);
+    }
+
+    $booking->status = 'rejected';
+    $booking->save();
+
+    return response()->json(['message' => 'تم رفض الحجز']);
 }
 
 
+
+
+public function deleteExpiredBookings()
+{
+    $now = Carbon::now();
+    $expiredBookings = Booking::whereHas('trip', function ($query) use ($now) {
+        $query->where('end_date', '<', $now);
+    })->get();
+
+    foreach ($expiredBookings as $booking) {
+        if ($booking->screenshot) {
+            Storage::delete('public/' . $booking->screenshot);
+        }
+        $booking->delete();
+    }
+
+    return response()->json(['message' => 'تم حذف الحجوزات المنتهية']);
+}
+}

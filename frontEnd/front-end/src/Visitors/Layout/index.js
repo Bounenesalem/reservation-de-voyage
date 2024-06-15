@@ -10,7 +10,7 @@ import Dashboard from "../../Admins/dashboard/dashboard.js"
 
 import Destination from "../../Admins/pages/destination/destination.js"
 import TripsTable from "../../Admins/pages/trips/tripTable.js"
-import NavBar from "../../component/NavBar"
+// import NavBar from "../../component/NavBar"
 import UpdateAgency from "../../Admins/pages/agency/agencyUpdate.js"
 import CreateAgency from "../../Admins/pages/agency/agencyCreate.js"
 
@@ -24,17 +24,19 @@ import UpdateDestination from "../../Admins/pages/destination/destinationUpdate.
 import DestinationDetails from "../../Admins/pages/destination/destinationDetails.js"
 import UpdateTrip from "../../Admins/pages/trips/tripUpdate.js"
 import TripDetailsPage from "../../Admins/pages/trips/tripDetails.js"
-import AgenciesPage from "../../Users/selectAgency.js"
-import Bookings from "../../Users/Booking.js"
+// import AgenciesPage from "../../Users/selectAgency.js"
+// import Bookings from "../../Users/Booking.js"
 import UserList from "../../Admins/pages/user/userList.js"
 import UserDetails from "../../Admins/pages/user/userDetails.js"
 import UpdateUser from "../../Admins/pages/user/userUpdate.js"
 import CreateUser from "../../Admins/pages/user/UserCreate.js"
 // import BookingList from "../../Admins/pages/booking/bookingList.js"
-import BookingCreate from "../../Admins/pages/booking/bookingCreate.js"
+// import BookingCreate from "../../Admins/pages/booking/bookingCreate.js"
 import Users from "../../Users/index.js"
 import BookingList from "../../Admins/pages/booking/bookingList.js"
 import AdminPanel from "../../Admins/pages/admin.js"
+import AdminBookings from "../../Users/AdminBooking.js"
+
 
 
 
@@ -89,10 +91,13 @@ function Layout(){
 
          
           <Route path='/users' element={<Users/>} />
-          <Route path="navbar" element={<NavBar/>}/>
-          <Route path="select" element={<AgenciesPage/>}/>
-          <Route path="book" element={<Bookings/>}/>
+          {/* <Route path="navbar" element={<NavBar/>}/> */}
+          {/* <Route path="select" element={<AgenciesPage/>}/> */}
+          {/* <Route path="book" element={<Bookings/>}/> */}
           <Route path="admin" element={<AdminPanel/>}/>
+          <Route path="/adminBooking" element={<AdminBookings/>} />
+
+          
 
           
 
