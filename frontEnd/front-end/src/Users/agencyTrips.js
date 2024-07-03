@@ -89,7 +89,7 @@ const AgencyTrips = ({ selectedAgency, setSelectedTrip, setView }) => {
 
   const handleTripSelect = (trip) => {
     setSelectedTrip(trip);
-    setView('tripDetails');
+    setView('bookingForm');
   };
 
   return (

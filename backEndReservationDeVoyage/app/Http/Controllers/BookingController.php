@@ -134,8 +134,8 @@ public function getBookings(Request $request)
 {
     $agencyId = $request->query('agency_id');
     if ($agencyId) {
-        $agency = Agency::findOrFail($agencyId);
-        $bookings = Booking::whereHas('trip', function ($query) use ($agencyId) {
+        $agency = agency::findOrFail($agencyId);
+        $bookings = booking::whereHas('trip', function ($query) use ($agencyId) {
             $query->where('agency_id', $agencyId);
         })->with(['user', 'trip.destination'])->get();
     } else {

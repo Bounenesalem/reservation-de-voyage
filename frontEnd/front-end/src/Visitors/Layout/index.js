@@ -5,7 +5,7 @@ import About from "../About.js/index.js"
 import Contact from "../Contact/index.js"
 import Login from "../Login/index.js"
 import Register from "../Register/index.js"
-import Dashboard from "../../Admins/dashboard/dashboard.js"
+// import Dashboard from "../../Admins/dashboard/dashboard.js"
 
 
 import Destination from "../../Admins/pages/destination/destination.js"
@@ -36,6 +36,8 @@ import Users from "../../Users/index.js"
 import BookingList from "../../Admins/pages/booking/bookingList.js"
 import AdminPanel from "../../Admins/pages/admin.js"
 import AdminBookings from "../../Users/AdminBooking.js"
+import Dashboard from "../../Admins/pages/dashboard.js"
+import HomeDashboard from "../../Admins/pages/HomeDashboard.js"
 
 
 
@@ -49,7 +51,7 @@ function Layout(){
  <BrowserRouter>
         
        
-        
+        {/* <SideBar> */}
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route path='/about' element={<About/>} />
@@ -59,14 +61,15 @@ function Layout(){
 
          
 
-          <Route path='/dashboard' element={<Dashboard/>}>    
+          <Route path='/dashboard' element={<Dashboard/>}>   
+          <Route index element={<HomeDashboard />} /> 
             <Route path="agencyAndTrip" element={<PageAgencies/>}/> 
             <Route path='listAgency/create' element={<CreateAgency/>} />
             <Route  path='listAgency' element={<Agencies/>}/>           
             <Route path="listAgency/:id" element={<UpdateAgency/>}/>
             <Route path="listAgency/agency-details/:agencyId" element={<AgencyDetailsPage/>}/>
 
-            <Route path="/dashboard/users" element={<UserList />} />
+            <Route path="users" element={<UserList />} />
             <Route path="users/:id" element={<UserDetails />} />
             <Route path="users/create-user" element={<CreateUser/>} />
             <Route path="users/update-user/:id" element={<UpdateUser />} />
@@ -107,6 +110,7 @@ function Layout(){
           <Route path='/login' element={<Login/>} />
           <Route path='/Register' element={<Register/>} />
         </Routes>
+        {/* </SideBar> */}
         </BrowserRouter>)
 } 
 export default Layout    

@@ -9,11 +9,13 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         Commands\DeleteExpiredBookings::class,
+        Commands\DeleteExpiredTrips::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('bookings:delete-expired')->daily();
+        $schedule->command('trips:delete-expired')->daily();
     }
 
     protected function commands()
@@ -22,4 +24,6 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+
 }

@@ -1,64 +1,3 @@
-// // Login.js
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// const Login = ({ setAuthToken }) => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [error, setError] = useState('');
-
-//   const handleLogin = async (event) => {
-//     event.preventDefault();
-//     try {
-//       const response = await axios.post('http://127.0.0.1:8000/api/login', {
-//         email,
-//         password,
-//       });
-//       const { token } = response.data;
-//       localStorage.setItem('token', token);
-//       setAuthToken(token);
-//     } catch (error) {
-//       setError('Invalid login credentials');
-//     }
-//   };
-
-//   return (
-//     <div className="container">
-//       <h2 className="my-4">Login</h2>
-//       {error && <p className="text-danger">{error}</p>}
-//       <form onSubmit={handleLogin}>
-//         <div className="mb-3">
-//           <label htmlFor="email" className="form-label">Email</label>
-//           <input
-//             type="email"
-//             id="email"
-//             className="form-control"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="mb-3">
-//           <label htmlFor="password" className="form-label">Password</label>
-//           <input
-//             type="password"
-//             id="password"
-//             className="form-control"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <button type="submit" className="btn btn-primary">Login</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
-
-
 import React, { useState } from 'react';
 import { Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -70,17 +9,26 @@ const theme = createTheme();
 const Login = ({ setAuthToken, setCurrentUser, setView }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState({});
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newError = {};
+    if (!email) newError.email = 'Email is required.';
+    if (!password) newError.password = 'Password is required.';
+    setError(newError);
+
+    if (Object.keys(newError).length > 0) return;
+
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login', { email, password });
       localStorage.setItem('token', response.data.token);
       setAuthToken(response.data.token);
       setCurrentUser(response.data.user);
+      setError({});
+      setView('selectAgency'); // توجيه المستخدم إلى صفحة "Select Agency"
     } catch (error) {
-      setError('Invalid email or password');
+      setError({ general: 'Invalid email or password' });
     }
   };
 
@@ -114,6 +62,8 @@ const Login = ({ setAuthToken, setCurrentUser, setView }) => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              error={!!error.email}
+              helperText={error.email}
             />
             <TextField
               margin="normal"
@@ -126,8 +76,10 @@ const Login = ({ setAuthToken, setCurrentUser, setView }) => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={!!error.password}
+              helperText={error.password}
             />
-            {error && <Typography color="error">{error}</Typography>}
+            {error.general && <Typography color="error" sx={{ mt: 2 }}>{error.general}</Typography>}
             <Button
               type="submit"
               fullWidth

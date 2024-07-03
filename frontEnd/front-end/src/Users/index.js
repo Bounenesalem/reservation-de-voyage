@@ -1,108 +1,3 @@
-// // Users.js
-// import React, { useState, useEffect } from 'react';
-// import SelectAgency from './selectAgency';
-// import AgencyTrips from './agencyTrips';
-// import Login from './login';
-// import Register from './register';
-// import Bookings from './Booking';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import axios from 'axios';
-// import TripDetails from './tripsDetails';
-// import BookingForm from './bookingForm';
-// import TripInformation from './TripInformation';
-
-// const Users = () => {
-//   const [selectedAgency, setSelectedAgency] = useState(null);
-//   const [selectedTrip, setSelectedTrip] = useState(null);
-//   const [numPeople, setNumPeople] = useState(0);
-//   const [view, setView] = useState('selectAgency');
-//   const [authToken, setAuthToken] = useState(localStorage.getItem('token') || null);
-//   const [currentUser, setCurrentUser] = useState(null);
-
-//   useEffect(() => {
-//     if (authToken) {
-//       axios.get('http://127.0.0.1:8000/api/user', {
-//         headers: {
-//           'Authorization': `Bearer ${authToken}`
-//         }
-//       }).then(response => {
-//         setCurrentUser(response.data);
-//       }).catch(error => {
-//         console.error('Error fetching user data:', error);
-//       });
-//     }
-//   }, [authToken]);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem('token');
-//     setAuthToken(null);
-//     setCurrentUser(null);
-//     setView('login');
-//   };
-
-//   const handleBookingComplete = (numPeople) => {
-//     setNumPeople(numPeople);
-//     setView('tripInformation');
-//   };
-
-//   return (
-//     <div>
-//       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-//         <a className="navbar-brand" href="#">Booking System</a>
-//         <div className="collapse navbar-collapse" id="navbarNav">
-//           <ul className="navbar-nav">
-//             {authToken ? (
-//               <>
-//                 <li className="nav-item">
-//                   <button className="nav-link btn" onClick={() => setView('selectAgency')}>Select Agency</button>
-//                 </li>
-//                 <li className="nav-item">
-//                   <button className="nav-link btn" onClick={() => setView('bookings')}>My Reservations</button>
-//                 </li>
-//                 <li className="nav-item">
-//                   <button className="nav-link btn" onClick={handleLogout}>Logout</button>
-//                 </li>
-//               </>
-//             ) : (
-//               <>
-//                 <li className="nav-item">
-//                   <button className="nav-link btn" onClick={() => setView('login')}>Login</button>
-//                 </li>
-//                 <li className="nav-item">
-//                   <button className="nav-link btn" onClick={() => setView('register')}>Register</button>
-//                 </li>
-//               </>
-//             )}
-//           </ul>
-//         </div>
-//       </nav>
-//       {authToken ? (
-//         <>
-//           {view === 'selectAgency' && <SelectAgency setSelectedAgency={setSelectedAgency} setView={setView} />}
-//           {view === 'agencyTrips' && <AgencyTrips selectedAgency={selectedAgency} setSelectedTrip={setSelectedTrip} setView={setView} />}
-//           {view === 'tripDetails' && <TripDetails trip={selectedTrip} onBookingClick={() => setView('bookingForm')} />}
-//           {view === 'bookingForm' && <BookingForm tripId={selectedTrip.id} onBookingComplete={handleBookingComplete} />}
-//           {view === 'tripInformation' && <TripInformation tripId={selectedTrip.id} numPeople={numPeople} />}
-//           {view === 'bookings' && <Bookings currentUser={currentUser} />}
-//         </>
-//       ) : (
-//         <>
-//           {view === 'login' && <Login setAuthToken={setAuthToken} setCurrentUser={setCurrentUser} />}
-//           {view === 'register' && <Register />}
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Users;
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import {
   CssBaseline, Drawer, AppBar, Toolbar, List, Typography, Divider, IconButton,
@@ -177,6 +72,7 @@ const Users = () => {
   const [authToken, setAuthToken] = useState(localStorage.getItem('token') || null);
   const [currentUser, setCurrentUser] = useState(null);
   const [open, setOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     if (authToken) {
@@ -311,8 +207,8 @@ const Users = () => {
           </>
         ) : (
           <>
-            {view === 'login' && <Login setAuthToken={setAuthToken} setCurrentUser={setCurrentUser} />}
-            {view === 'register' && <Register />}
+            {view === 'login' && <Login setAuthToken={setAuthToken} setCurrentUser={setCurrentUser} setView={setView} successMessage={successMessage} />}
+            {view === 'register' && <Register setView={setView} setSuccessMessage={setSuccessMessage} />}
           </>
         )}
       </Main>
@@ -321,6 +217,7 @@ const Users = () => {
 };
 
 export default Users;
+
 
 
 
