@@ -1,22 +1,23 @@
 import Header from "../../component/Header"
 import Hero from "../../component/hero"
-import AbutImage from "../../asserts/4.jpg"  
+import AbutImage from "../../asserts/3.jpg"
 import Footer from "../../component/Footer"
-import ContactFrom from "./ContactFrom"
+import AboutUs from './about.js'
+function About(){
 
-function Contact(){
-    
-    return <>
-    <Header/>
-    <Hero
+    return(
+      <>
+      <Header/>
+      <Hero
       cName="hero-mid"
       heroImg={AbutImage}
-      title="contact"
+      title="About"
             btnClass="hide"
       />
-      <ContactFrom/>
+      <AboutUs/>
       <Footer/>
-    </>
+  </>
+    ) ;
 }
 
-export default Contact
+export default About

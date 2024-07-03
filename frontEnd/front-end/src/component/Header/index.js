@@ -1,42 +1,35 @@
-import {Navbar,Container,Nav,NavDropdown} from "react-bootstrap"
-import {Link} from "react-router-dom"
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import './Header.css';  // Import the CSS file
 
-function Header()
-{
-  
-    return(
-        <div> 
-            <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">Reservation De Voyage</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto " >
-          
-            
-              <Link to="/" className="mx-3">Home</Link>            
-             <Link to="/about" className="mx-3">About</Link>            
-             <Link to="/contact" className="mx-3">Contact</Link>
-             
-             
-              
-             
-                       
-                   
-          </Nav>
-        </Navbar.Collapse>
-        <Nav>
-          
-          <NavDropdown title="Login">
-            <NavDropdown.Item>
-            <Link to="/users" className="mx-3">Login</Link>
-           <Link to="/users" className="mx-3">Register</Link> 
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-      </Container>
-    </Navbar>
-        </div>
-    ) 
+function Header() {
+  return (
+    <div className="navbarItems"> 
+      <Navbar expand="lg" className="bg-body-tertiary custom-navbar">
+        <Container>
+          <Navbar.Brand href="#home" className="navbar-logo">Reservation De Voyage</Navbar.Brand>
+          {/* <div className="menu-icons">
+             <i className="fas fa-bars"></i>
+            </div>  */}
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto nav-menu"> {/* Changed class from ml-auto to ms-auto */}
+              <Link to="/" className="nav-link">Home</Link>            
+              <Link to="/about" className="nav-link">About</Link>            
+              <Link to="/contact" className="nav-link">Contact</Link>
+              <NavDropdown title="Login" id="basic-nav-dropdown" className="nav-dropdown">
+                <NavDropdown.Item>
+                  <Link to="/users" className="dropdown-link">Login</Link> <br></br>
+                
+                  <Link to="/users" className="dropdown-link">Register</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </div>
+  );
 }
-export default Header
+
+export default Header;
