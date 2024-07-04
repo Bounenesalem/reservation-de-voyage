@@ -1,79 +1,6 @@
 
 
 
-// // Register.js
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// const Register = () => {
-//   const [name, setName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [error, setError] = useState('');
-//   const [success, setSuccess] = useState('');
-
-//   const handleRegister = async (event) => {
-//     event.preventDefault();
-//     try {
-//       await axios.post('http://127.0.0.1:8000/api/register', {
-//         name,
-//         email,
-//         password,
-//       });
-//       setSuccess('Registration successful! Please log in.');
-//     } catch (error) {
-//       setError('Error registering user');
-//     }
-//   };
-
-//   return (
-//     <div className="container">
-//       <h2 className="my-4">Register</h2>
-//       {error && <p className="text-danger">{error}</p>}
-//       {success && <p className="text-success">{success}</p>}
-//       <form onSubmit={handleRegister}>
-//         <div className="mb-3">
-//           <label htmlFor="name" className="form-label">Name</label>
-//           <input
-//             type="text"
-//             id="name"
-//             className="form-control"
-//             value={name}
-//             onChange={(e) => setName(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="mb-3">
-//           <label htmlFor="email" className="form-label">Email</label>
-//           <input
-//             type="email"
-//             id="email"
-//             className="form-control"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="mb-3">
-//           <label htmlFor="password" className="form-label">Password</label>
-//           <input
-//             type="password"
-//             id="password"
-//             className="form-control"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <button type="submit" className="btn btn-primary">Register</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Register;
-
-
 import React, { useState } from 'react';
 import { Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -82,19 +9,35 @@ import axios from 'axios';
 
 const theme = createTheme();
 
-const Register = ({ setView }) => {
+const Register = ({ setView, setSuccessMessage }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [phone, setPhone] = useState('');
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newErrors = {};
+    if (!name) newErrors.name = 'Name is required.';
+    if (!email) newErrors.email = 'Email is required.';
+    if (!password) newErrors.password = 'Password is required.';
+    if (!phone) newErrors.phone = 'Phone number is required.';
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) return;
+
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register', { name, email, password });
-      setView('/login');
+      await axios.post('http://127.0.0.1:8000/api/register', { name, email, password, phone });
+      setErrors({});
+      setSuccessMessage('Registration completed successfully!');
+      setView('login');
     } catch (error) {
-      setError('Registration failed');
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors({ general: 'Registration failed' });
+      }
     }
   };
 
@@ -128,6 +71,8 @@ const Register = ({ setView }) => {
               autoFocus
               value={name}
               onChange={(e) => setName(e.target.value)}
+              error={!!errors.name}
+              helperText={errors.name}
             />
             <TextField
               margin="normal"
@@ -139,6 +84,21 @@ const Register = ({ setView }) => {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              error={!!errors.email}
+              helperText={errors.email}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Phone Number"
+              name="phone"
+              autoComplete="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              error={!!errors.phone}
+              helperText={errors.phone}
             />
             <TextField
               margin="normal"
@@ -151,8 +111,10 @@ const Register = ({ setView }) => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={!!errors.password}
+              helperText={errors.password}
             />
-            {error && <Typography color="error">{error}</Typography>}
+            {errors.general && <Typography color="error">{errors.general}</Typography>}
             <Button
               type="submit"
               fullWidth

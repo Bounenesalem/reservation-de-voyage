@@ -27,12 +27,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'phone' => 'required|string|max:15',
         ]);
 
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
+            'phone' => $validatedData['phone'],
         ]);
 
         return response()->json($user, 201);
@@ -46,9 +48,11 @@ class UserController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'sometimes|required|string|min:8',
+            'phone' => 'sometimes|required|string|max:15',
         ]);
 
-        $user->update($request->only(['name', 'email', 'password']));
+
+        $user->update($request->only(['name', 'email', 'password','phone']));
 
         return response()->json($user);
     }

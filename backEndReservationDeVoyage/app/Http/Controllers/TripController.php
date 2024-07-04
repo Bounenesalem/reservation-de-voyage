@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\agency;
 use App\Models\trip;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Carbon;
 
 class TripController extends Controller
 {
@@ -84,6 +84,18 @@ class TripController extends Controller
         return response()->json(['message' => 'trip deleted successfully']);
     }
 
+
+    public function deleteExpiredTrips()
+    {
+        $now = Carbon::now();
+        $expiredTrips = Trip::where('end_date', '<', $now)->get();
+
+        foreach ($expiredTrips as $trip) {
+            $trip->delete();
+        }
+
+        return response()->json(['message' => 'تم حذف الرحلات المنتهية']);
+    }
 
 
 

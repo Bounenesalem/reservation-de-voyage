@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class booking extends Model
 {
     use HasFactory;
-    protected $fillable = ['trip_id', 'name', 'num_people', 'status','user_id',];
+    protected $fillable = ['trip_id', 'name', 'num_people', 'status','user_id','payment_method','screenshot'];
 
     public function trip()
     {

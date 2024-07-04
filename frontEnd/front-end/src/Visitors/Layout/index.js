@@ -5,12 +5,12 @@ import About from "../About.js/index.js"
 import Contact from "../Contact/index.js"
 import Login from "../Login/index.js"
 import Register from "../Register/index.js"
-import Dashboard from "../../Admins/dashboard/dashboard.js"
+// import Dashboard from "../../Admins/dashboard/dashboard.js"
 
 
 import Destination from "../../Admins/pages/destination/destination.js"
 import TripsTable from "../../Admins/pages/trips/tripTable.js"
-import NavBar from "../../component/NavBar"
+// import NavBar from "../../component/NavBar"
 import UpdateAgency from "../../Admins/pages/agency/agencyUpdate.js"
 import CreateAgency from "../../Admins/pages/agency/agencyCreate.js"
 
@@ -24,17 +24,21 @@ import UpdateDestination from "../../Admins/pages/destination/destinationUpdate.
 import DestinationDetails from "../../Admins/pages/destination/destinationDetails.js"
 import UpdateTrip from "../../Admins/pages/trips/tripUpdate.js"
 import TripDetailsPage from "../../Admins/pages/trips/tripDetails.js"
-import AgenciesPage from "../../Users/selectAgency.js"
-import Bookings from "../../Users/Booking.js"
+// import AgenciesPage from "../../Users/selectAgency.js"
+// import Bookings from "../../Users/Booking.js"
 import UserList from "../../Admins/pages/user/userList.js"
 import UserDetails from "../../Admins/pages/user/userDetails.js"
 import UpdateUser from "../../Admins/pages/user/userUpdate.js"
 import CreateUser from "../../Admins/pages/user/UserCreate.js"
 // import BookingList from "../../Admins/pages/booking/bookingList.js"
-import BookingCreate from "../../Admins/pages/booking/bookingCreate.js"
+// import BookingCreate from "../../Admins/pages/booking/bookingCreate.js"
 import Users from "../../Users/index.js"
 import BookingList from "../../Admins/pages/booking/bookingList.js"
 import AdminPanel from "../../Admins/pages/admin.js"
+import AdminBookings from "../../Users/AdminBooking.js"
+import Dashboard from "../../Admins/pages/dashboard.js"
+import HomeDashboard from "../../Admins/pages/HomeDashboard.js"
+
 
 
 
@@ -47,7 +51,7 @@ function Layout(){
  <BrowserRouter>
         
        
-        
+        {/* <SideBar> */}
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route path='/about' element={<About/>} />
@@ -57,14 +61,15 @@ function Layout(){
 
          
 
-          <Route path='/dashboard' element={<Dashboard/>}>    
+          <Route path='/dashboard' element={<Dashboard/>}>   
+          <Route index element={<HomeDashboard />} /> 
             <Route path="agencyAndTrip" element={<PageAgencies/>}/> 
             <Route path='listAgency/create' element={<CreateAgency/>} />
             <Route  path='listAgency' element={<Agencies/>}/>           
             <Route path="listAgency/:id" element={<UpdateAgency/>}/>
             <Route path="listAgency/agency-details/:agencyId" element={<AgencyDetailsPage/>}/>
 
-            <Route path="/dashboard/users" element={<UserList />} />
+            <Route path="users" element={<UserList />} />
             <Route path="users/:id" element={<UserDetails />} />
             <Route path="users/create-user" element={<CreateUser/>} />
             <Route path="users/update-user/:id" element={<UpdateUser />} />
@@ -89,10 +94,13 @@ function Layout(){
 
          
           <Route path='/users' element={<Users/>} />
-          <Route path="navbar" element={<NavBar/>}/>
-          <Route path="select" element={<AgenciesPage/>}/>
-          <Route path="book" element={<Bookings/>}/>
+          {/* <Route path="navbar" element={<NavBar/>}/> */}
+          {/* <Route path="select" element={<AgenciesPage/>}/> */}
+          {/* <Route path="book" element={<Bookings/>}/> */}
           <Route path="admin" element={<AdminPanel/>}/>
+          <Route path="/adminBooking" element={<AdminBookings/>} />
+
+          
 
           
 
@@ -102,6 +110,7 @@ function Layout(){
           <Route path='/login' element={<Login/>} />
           <Route path='/Register' element={<Register/>} />
         </Routes>
+        {/* </SideBar> */}
         </BrowserRouter>)
 } 
 export default Layout    

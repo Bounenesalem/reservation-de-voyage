@@ -1,62 +1,14 @@
-// import { useState ,useEffect } from "react";
-// // import http from "./Admins/pages/http";
-
-// export default function User(){
-//     const [users,setUsers]=useState([]);
-
-//     useEffect(()=>{
-//         fetch(" http://127.0.0.1:8000/api/register ")
-//         .then((res)=>res.json())
-//         .then((data)=>console.log(data))
-//     },[]);
-
-    
-    
-
-//     return (
-//         <div>
-//             <h2>users listing</h2>
-//             <table className="table">
-//                 <thead>
-//                     <tr>
-//                         <th>id</th>
-//                         <th>Name</th>
-//                         <th>email</th>
-//                         <th>Password</th>
-                       
-//                         <th>Action</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {users.map((user,index)=>(
-
-//                         <tr key={user.id}>
-//                         <td>{index}</td>
-//                         <td>{user.name}</td>
-//                         <td>{user.email}</td>
-//                         <td>{user.password}</td>
-                    
-//                         <td>edit</td>
-//                         </tr>
-
-//                     ))}
-                   
-//                 </tbody>
-//             </table>
-//         </div>
-//     )
-// }
-
-
+// src/pages/UserList.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography, Box, IconButton } from '@mui/material';
+import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon, Info as InfoIcon } from '@mui/icons-material';
+import SideBar from '../../../component/SideBar';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [runUsers,setRunUsers]=useState(0);
-
+  const [runUsers, setRunUsers] = useState(0);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/user')
@@ -68,48 +20,68 @@ const UserList = () => {
       });
   }, [runUsers]);
 
-  async function deleteUser(id){
-    try{ 
-   const res=await  axios.delete( `http://127.0.0.1:8000/api/user/${id}`);
-     if(res.status===200){
-      setRunUsers((prev)=> prev+1)
-     }
- 
-     }catch{
-         console.log("none");
-     }
- }
+  async function deleteUser(id) {
+    try {
+      const res = await axios.delete(`http://127.0.0.1:8000/api/user/${id}`);
+      if (res.status === 200) {
+        setRunUsers((prev) => prev + 1);
+      }
+    } catch {
+      console.log("none");
+    }
+  }
 
   return (
-    <div className="container">
-      <h2 className="my-4">Users</h2>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                <Link to={`${user.id}`} className="btn btn-info btn-sm">View</Link>
-                <Link to={`update-user/${user.id}`} className="btn btn-warning btn-sm mx-2">Edit</Link>
-                <button onClick={()=>deleteUser(user.id)} className="btn btn-danger btn-sm mx-2">delete</button> 
+    <SideBar>
+    <Box mt={4}>
+      <Typography variant="h4" gutterBottom>
+        User Listing
+      </Typography>
+      <Box mb={2} display="flex" alignItems="center">
+        <IconButton color="primary" component={Link} to="create-user">
+          <AddIcon />
+        </IconButton>
+        <Typography variant="h6" ml={1}>
+          Create User
+        </Typography>
+      </Box>
 
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Link to="create-user" className="btn btn-primary mt-3">Create User</Link>
-    </div>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user, index) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.phone}</TableCell>
+                <TableCell>
+                  <IconButton color="secondary" onClick={() => deleteUser(user.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton color="primary" component={Link} to={`update-user/${user.id}`}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton component={Link} to={`${user.id}`}>
+                    <InfoIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+    </SideBar>
   );
 };
 

@@ -8,6 +8,9 @@ function Header() {
       <Navbar expand="lg" className="bg-body-tertiary custom-navbar">
         <Container>
           <Navbar.Brand href="#home" className="navbar-logo">Reservation De Voyage</Navbar.Brand>
+          {/* <div className="menu-icons">
+             <i className="fas fa-bars"></i>
+            </div>  */}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto nav-menu"> {/* Changed class from ml-auto to ms-auto */}
