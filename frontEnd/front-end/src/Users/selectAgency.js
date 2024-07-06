@@ -61,7 +61,7 @@ const SelectAgency = ({ setSelectedAgency, setView }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={2}>
-                  <Typography align="center">البحث غير موجود</Typography>
+                  <Typography align="center">Search not found</Typography>
                 </TableCell>
               </TableRow>
             )}

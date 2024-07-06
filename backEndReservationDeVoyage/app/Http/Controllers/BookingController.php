@@ -113,22 +113,7 @@ class BookingController extends Controller
         return response()->json(['message' => 'Reservation cancelled successfully', 'reservation' => $reservation]);
     }
 
-// BookingController.php
 
-// public function getBookings(Request $request)
-// {
-//     $agencyId = $request->query('agency_id');
-//     if ($agencyId) {
-//         $agency = agency::findOrFail($agencyId);
-//         $bookings = booking::whereHas('trip', function ($query) use ($agencyId) {
-//             $query->where('agency_id', $agencyId);
-//         })->with(['user', 'trip.destination'])->get();
-//     } else {
-//         $bookings = booking::with(['user', 'trip.destination'])->get();
-//     }
-
-//     return response()->json($bookings);
-// }
 
 public function getBookings(Request $request)
 {

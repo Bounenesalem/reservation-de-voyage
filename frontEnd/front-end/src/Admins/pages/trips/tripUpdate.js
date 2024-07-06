@@ -204,102 +204,103 @@ const UpdateTrip = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://127.0.0.1:8000/api/trip/${id}`, formData);
+            const response = await axios.put(`http://127.0.0.1:8000/api/trip/${id}`, formData);
+            console.log('Trip updated successfully:', response.data);
             navigate('/dashboard/TripsTable');
         } catch (error) {
-            console.error('Error updating trip:', error);
+            console.error('Error updating trip:', error.response ? error.response.data : error.message);
         }
     };
 
     return (
         <SideBar>
-        <Box mt={4}>
-            <Typography variant="h4" gutterBottom>
-                Update Trip
-            </Typography>
-            <form onSubmit={handleSubmit}>
-                <Box mb={2}>
-                    <TextField
-                        select
-                        label="Select Agency"
-                        name="agency_id"
-                        value={formData.agency_id}
-                        onChange={handleInputChange}
-                        fullWidth
-                    >
-                        {agencies.map(agency => (
-                            <MenuItem key={agency.id} value={agency.id}>
-                                {agency.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Box>
-                <Box mb={2}>
-                    <TextField
-                        select
-                        label="Select Destination"
-                        name="destination_id"
-                        value={formData.destination_id}
-                        onChange={handleInputChange}
-                        fullWidth
-                    >
-                        {destinations.map(destination => (
-                            <MenuItem key={destination.id} value={destination.id}>
-                                {destination.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Box>
-                <Box mb={2}>
-                    <TextField
-                        label="Description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        fullWidth
-                    />
-                </Box>
-                <Box mb={2}>
-                    <TextField
-                        label="Start Date"
-                        name="start_date"
-                        type="date"
-                        value={formData.start_date}
-                        onChange={handleInputChange}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        fullWidth
-                    />
-                </Box>
-                <Box mb={2}>
-                    <TextField
-                        label="End Date"
-                        name="end_date"
-                        type="date"
-                        value={formData.end_date}
-                        onChange={handleInputChange}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        fullWidth
-                    />
-                </Box>
-                <Box mb={2}>
-                    <TextField
-                        label="Price"
-                        name="price"
-                        type="number"
-                        value={formData.price}
-                        onChange={handleInputChange}
-                        fullWidth
-                    />
-                </Box>
-                <Button type="submit" variant="contained" color="primary">
+            <Box mt={4}>
+                <Typography variant="h4" gutterBottom>
                     Update Trip
-                </Button>
-            </form>
-        </Box>
+                </Typography>
+                <form onSubmit={handleSubmit}>
+                    <Box mb={2}>
+                        <TextField
+                            select
+                            label="Select Agency"
+                            name="agency_id"
+                            value={formData.agency_id}
+                            onChange={handleInputChange}
+                            fullWidth
+                        >
+                            {agencies.map(agency => (
+                                <MenuItem key={agency.id} value={agency.id}>
+                                    {agency.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            select
+                            label="Select Destination"
+                            name="destination_id"
+                            value={formData.destination_id}
+                            onChange={handleInputChange}
+                            fullWidth
+                        >
+                            {destinations.map(destination => (
+                                <MenuItem key={destination.id} value={destination.id}>
+                                    {destination.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            label="Description"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            fullWidth
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            label="Start Date"
+                            name="start_date"
+                            type="date"
+                            value={formData.start_date}
+                            onChange={handleInputChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            fullWidth
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            label="End Date"
+                            name="end_date"
+                            type="date"
+                            value={formData.end_date}
+                            onChange={handleInputChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            fullWidth
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            label="Price"
+                            name="price"
+                            type="number"
+                            value={formData.price}
+                            onChange={handleInputChange}
+                            fullWidth
+                        />
+                    </Box>
+                    <Button type="submit" variant="contained" color="primary">
+                        Update Trip
+                    </Button>
+                </form>
+            </Box>
         </SideBar>
     );
 };

@@ -128,7 +128,7 @@ const BookingForm = ({ tripId, onBookingComplete }) => {
   };
 
   if (!trip) {
-    return <Typography variant="h6">الرحلة غير موجودة</Typography>;
+    return <Typography variant="h6">Search Not Found</Typography>;
   }
 
   const totalCost = trip.price * (numPeople || 0);

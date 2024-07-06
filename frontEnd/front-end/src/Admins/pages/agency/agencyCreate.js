@@ -123,7 +123,7 @@ const CreateAgency = () => {
       phone: phone,
     }).then(({ data }) => {
       console.log(data.message);
-      navigate('/agencies');
+      navigate('/dashboard/listAgency');
     }).catch(({ response }) => {
       if (response.status === 422) {
         console.log(response.data.errors);

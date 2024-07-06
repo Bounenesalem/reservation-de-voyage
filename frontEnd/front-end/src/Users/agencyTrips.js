@@ -130,14 +130,14 @@ const AgencyTrips = ({ selectedAgency, setSelectedTrip, setView }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={5}>
-                  <Typography align="center">البحث غير موجود</Typography>
+                  <Typography align="center">Search Not Found   </Typography>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </TableContainer>
-      <Button onClick={() => setView('selectAgency')}>عودة</Button>
+      {/* <Button onClick={() => setView('selectAgency')}>عودة</Button> */}
 
     </Container>
   );

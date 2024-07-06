@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography, Box, IconButton } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,  Typography, Box, IconButton } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon, Info as InfoIcon } from '@mui/icons-material';
 import SideBar from '../../../component/SideBar';
 
@@ -11,13 +11,16 @@ const UserList = () => {
   const [runUsers, setRunUsers] = useState(0);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/user')
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the users!', error);
-      });
+    const token = localStorage.getItem('token');
+    axios.get('http://127.0.0.1:8000/api/user', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(response => {
+      setUsers(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+    });
   }, [runUsers]);
 
   async function deleteUser(id) {

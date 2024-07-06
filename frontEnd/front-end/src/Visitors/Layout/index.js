@@ -34,10 +34,10 @@ import CreateUser from "../../Admins/pages/user/UserCreate.js"
 // import BookingCreate from "../../Admins/pages/booking/bookingCreate.js"
 import Users from "../../Users/index.js"
 import BookingList from "../../Admins/pages/booking/bookingList.js"
-import AdminPanel from "../../Admins/pages/admin.js"
-import AdminBookings from "../../Users/AdminBooking.js"
+
 import Dashboard from "../../Admins/pages/dashboard.js"
 import HomeDashboard from "../../Admins/pages/HomeDashboard.js"
+import BookingDetails from "../../Users/BookingDetails.js"
 
 
 
@@ -83,7 +83,7 @@ function Layout(){
 
            
             <Route path="TripsTable" element={<TripsTable/>}/>
-            <Route path="TripsTable/trip" element={<CreateTrip/>}/>
+            <Route path="TripsTable/create" element={<CreateTrip/>}/>
             <Route path="TripsTable/:id" element={<UpdateTrip/>}/>
             <Route path="TripsTable/trip-details/:id" element={<TripDetailsPage/>}/>
 
@@ -93,13 +93,9 @@ function Layout(){
             </Route>
 
          
-          <Route path='/users' element={<Users/>} />
-          {/* <Route path="navbar" element={<NavBar/>}/> */}
-          {/* <Route path="select" element={<AgenciesPage/>}/> */}
-          {/* <Route path="book" element={<Bookings/>}/> */}
-          <Route path="admin" element={<AdminPanel/>}/>
-          <Route path="/adminBooking" element={<AdminBookings/>} />
-
+          <Route path='/users/*' element={<Users/>} />
+          <Route path="/booking/:bookingId" component={BookingDetails} />
+         
           
 
           

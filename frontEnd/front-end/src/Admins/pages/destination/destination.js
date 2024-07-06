@@ -124,9 +124,9 @@ const Destination = () => {
     <SideBar>
     <Box mt={4}>
       <Box mb={2}>
-        <Button variant="contained" color="success" component={Link} to="/dashboard/destinations">
+        {/* <Button variant="contained" color="success" component={Link} to="/dashboard/destinations">
           Back to Destinations
-        </Button>
+        </Button> */}
       </Box>
       <Typography variant="h4" gutterBottom>
         Create Destination
